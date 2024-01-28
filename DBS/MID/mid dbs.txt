@@ -1,0 +1,246 @@
+
+MCQs (25x1 = 25 marks)
+Total points
+18/25
+ 
+Choose the best option.
+18 of 25 points
+ 
+_________ are responsible for authorizing access to the database, for coordinating and monitoring its use.
+1/1
+Database Administrators
+ 
+End Users
+Database Designers
+Application Programmers
+ 
+Which of the following QUERY is correct to retrieve city-wise listing of COVID positive cases?
+1/1
+SELECT city, count(*) FROM tests WHERE result = ‘positive’ GROUP BY name;
+SELECT city, count(*) FROM tests WHERE result = ‘positive’ ORDER BY city;
+SELECT city, count(*) FROM tests WHERE result = ‘positive’ GROUP BY city;
+ 
+SELECT city, sum(city) FROM tests WHERE result = ‘positive’ GROUP BY city;
+ 
+The ______________ of two relations is linking of every tuple of one relation with every tuple of a second relation.
+1/1
+Difference
+Product
+ 
+Projection
+Selection
+ 
+Which of the following is not a problem of file processing system?
+0/1
+Data Consistency
+Data Recovery
+ 
+Data Redundancy
+Data Dependence
+Correct answer
+Data Consistency
+ 
+Action assertion constraints are enforced using __________.
+0/1
+Foreign Key
+Data Dictionary
+DDL
+ 
+Triggers
+Correct answer
+Triggers
+ 
+________________ states that the values of an attribute being used as a foreign key must match with the primary key values of another table.
+1/1
+Entity Integrity Constraint
+Referential Integrity Constraint
+ 
+Matching Integrity Constraint
+Dependent Integrity Constraint
+ 
+Which of the following is not a layer of database architecture?
+1/1
+Conceptual
+Session
+ 
+External
+Physical
+ 
+In the relational model, relationships between relations or tables are created using ______________.
+1/1
+Primary Keys
+Foreign Keys
+ 
+Candidate Keys
+Composite Keys
+ 
+Which of the following is the correct ordering of clauses used in a SELECT statement?
+0/1
+WHERE, HAVING, GROUP BY, ORDER BY
+WHERE, ORDER BY, GROUP BY, HAVING
+WHERE, GROUP BY, HAVING, ORDER BY
+WHERE, GROUP BY, ORDER BY, HAVING
+ 
+Correct answer
+WHERE, GROUP BY, HAVING, ORDER BY
+ 
+What is the output of the following statement? SELECT SUBSTR(‘123456789’, INSTR(‘abcabcabc’, ‘b’), 4) FROM DUAL;
+1/1
+1234
+6789
+2345
+ 
+3456
+ 
+Descriptions of the properties or characteristics of the data, including data types, field sizes, allowable values, and documentation is called ______________.
+1/1
+Data Consistency
+Data Redundancy
+Meta data
+ 
+Data Integrity
+ 
+A type of join where tuples from one relation that do not have matching values in the common attribute(s) of the second relation are also included in the result is called __________________.
+1/1
+Natural join
+Theta join
+Outer join
+ 
+Inner join
+ 
+An attribute which can have more than one value for an entity instance is _________________
+0/1
+Multi Valued Attribute
+Composite Attribute
+ 
+Derived Attribute
+Atomic Attribute
+Correct answer
+Multi Valued Attribute
+ 
+Which of the following is not a property of a relation?
+1/1
+All the tuples must be unique
+The values of an attribute must be from the same domain
+All the attributes must have a unique name
+The tuples must be ordered
+ 
+ 
+A set of allowable values for an attribute is called ____________ of the attribute.
+1/1
+Coverage
+Domain
+ 
+Size
+Range
+ 
+A Foreign Key is _____________________.
+0/1
+A key that consists of more than one field
+A field in a table that contains data that is also contained elsewhere in another table
+ 
+A field in a table that has the same name as a key field in another table
+A field in a table whose values should match with the primary key of another table
+Correct answer
+A field in a table whose values should match with the primary key of another table
+ 
+Which of the following is not a DML statement of SQL?
+0/1
+DELETE
+CREATE
+SELECT
+ 
+INSERT
+Correct answer
+CREATE
+ 
+Which of the following is not a group function of SQL?
+1/1
+MIN
+SUM
+MAX
+NVL
+ 
+ 
+A difference between Super Key and Candidate Key is_______________________
+1/1
+A Super Key consists of a minimal set of attributes and a Candidate Key does not consist of a minimal set of attributes.
+Candidate Key can uniquely identify an entity instance and Super Key can not.
+A Candidate Key consists of a minimal set of attributes and a Super Key does not consist of a minimal set of attributes.
+ 
+Super Key can uniquely identify an entity instance and Candidate Key can not.
+ 
+Joining 2 relations without a join condition clause is called ________________________
+1/1
+Self Join
+Equi Join
+Outer Join
+Cartesian Join
+ 
+ 
+A candidate key that does not have a null value and is selected to uniquely identify all other attribute values in any given row is called a ___________.
+0/1
+Foreign Key
+Super Key
+Primary Key
+Secondary Key
+ 
+Correct answer
+Primary Key
+ 
+In SQL, _______________ keyword is used to SELECT only one copy of each set of duplicable rows
+1/1
+UNIQUE
+DIFFERENT
+DISTINCT
+ 
+NON-DUPLICATE
+ 
+Number of tuples in a relation is called _________ of the relation
+1/1
+Tuple Count
+Size
+Degree
+Cardinality
+ 
+ 
+The maximum number of super keys for a relation consisting of 4 attributes can be ________
+1/1
+8
+4
+12
+15
+ 
+ 
+Integrity constraints are used to _______________.
+1/1
+Ensure the correctness of data
+Comply business rules
+Restrict the possible values of data
+All of the given
+ 
+SQL (6x2.5 = 15 marks)
+0 of 0 points
+Use the following tables to write the queries
+EMP (empno, ename, job, sal, hiredate, mgr, comm, deptno)
+DEPT (deptno, dname, loc)
+List all the CLERKs having single S in their names.
+select * from emp where ename like '%S%'
+Display the department wise of count of employees of all the departments.
+select count(*) from emp group by deptno
+Suppose that the name of each employees stored in the field "ename" consists of "first name" and "last name". Write a query to display the ename in two columns, "Fname" and "Lname". For example, ename="Asif Sohail" should be displayed as Fname = "Asif" and Lname = "Sohail".
+select   substr(ename ,1,instr(ename,' ')),substr(ename ,instr(ename,' ')) from emp
+Find the name of the department with the highest number of employees.
+select deptno,max(count(*))  from emp
+List all employees with more than 10 years of service.
+select *   from emp where  months_between(SYSDATE, hire_date)*12 >10
+Display empno, ename, job, deptno, danme. The output should display all the matching as well as non-matching instances.
+select * from emp, dept
+ERD (10 marks)
+0 of 0 points
+Draw an ERD for the following situation
+A university has many faculties such as faculty of science, faculty of commerce, faculty of law etc. A faculty operates many departments, but each department is operated by only one faculty. A department has many teachers and many students. Only one of the teachers chairs the department. Each department offers many degree programs. Each degree program comprises many courses and the same course may be offered in multiple degree programs of a department. Each degree program has one degree supervisor. Many classes are scheduled for the same course. A class is taught by one teacher and a teacher can teach up to three classes. A student may enroll in several classes (up to 6) and each class has up to 35 students.
+Image
+bcsf18m027 - bcsf18m027-SYED NOUMAN REHMAN.jpg
+This form was created inside of PUCIT, University of the Punjab, Lahore.
+Google Forms

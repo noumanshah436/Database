@@ -1,0 +1,41 @@
+Drawbacks of File System     24
+data base system         slide 30
+
+slide 2   pg 11
+Components of Database Environment    15
+Application Programs
+Repository
+Database
+DBMS
+User Groups
+
+
+Types of Data Models   slide 3  pg 4
+Types of Attributes  slide 13
+
+
+
+Relational Keys  slide 4 pg 17
+
+
+
+1.Degree. This is the number of entities involved in the relationship and it is usually 2 (binary relationship) however Unary and higher degree relationships can be exists.
+
+2.Cardinality. This specifies the number of each entity that is involved in the relationship there are 3 types of cardinality for binary relationships
+
+one to one (1:1)
+one to many (1:n)
+many to many (n:m)
+
+
+
+cardinality -> # of tuple in relation
+degree   # of attributes
+
+
+Existence Dependency
+ pg 17
+Degree of Relationship
+ pg 22
+
+ 

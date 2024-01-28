@@ -1,0 +1,45 @@
+https://chrome.google.com/webstore/detail/volume-control/lhhgpflelfbhnihnbjigpgdbahgkbghp?hl=en
+
+
+All of the following variants work:
+
+SELECT ename, hiredate from emp where to_char(hiredate,'mm-dd-yy') < to_date('10-10-82','mm-dd-yy')  
+SELECT ename, hiredate from emp where to_date(to_char(hiredate,'mm-dd-yy')) < to_date('10-10-82','mm-dd-yy')
+SELECT ename, hiredate from emp where to_char(hiredate,'mm-dd-yyyy') < to_date('10-10-1982','mm-dd-yyyy')
+
+https://apex.oracle.com/pls/apex/f?p=4500:1000:712345784869068:::::
+https://apex.oracle.com/en/
+apex oracle
+China-123
+
+workspace:bcsf18m027
+
+
+*Upload table *
+sequal workshop ->sequal script->upload
+
+morning class TA's  ahtisham & ali raza
+mcsf19m002@pucit.edu.pk
+mcsf18m005@pucit.edu.pk
+
+
+Mcsf19M002-Ahtisham ALI
+
+
+lab TA:
+
+mcsf19m002@pucit.edu.pk       
+bitf17a021@pucit.edu.pk 
+Bcsf17a020@pucit.edu.pk
+Ahmed aziz
+
+ahtisham & ali raza
+
+ali raza
+
+https://apex.oracle.com/en/Mcsf18m005@pucit.edu.pk
+
+
+https://apex.oracle.com/en/
+
+

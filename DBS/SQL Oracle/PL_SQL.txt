@@ -1,0 +1,131 @@
+begin 
+dbms_output.put_line('Syed Nouman');
+end;
+
+declare 
+a number(5);
+BEGIN
+a:= 27;
+dbms_output.put_line(' a = '||a);
+end;
+
+
+declare 
+a number(5);
+BEGIN
+a:=:a;
+if (a>=50) then
+dbms_output.put_line('Pass');
+else
+dbms_output.put_line('Fail');
+END IF;
+end;
+
+i)
+create procedure product(
+a number ,
+b number
+) is
+BEGIN
+dbms_output.put_line(a*b);
+END;
+
+ii)
+BEGIN
+product(5,6);
+END;
+
+
+i)
+create or replace procedure insert_dept(
+dno dept.deptno%type,  
+dname dept.dname%type,
+loc dept.loc%type
+) is
+BEGIN
+insert into dept values(dno,dname,loc);
+END;
+
+ii)
+BEGIN
+insert_dept(50,'Liberary','Lahore');
+END;
+
+iii)
+select * from dept
+
+
+
+create or replace function isLeapYear
+(
+n number
+)
+return varchar is
+begin
+if(mod(n,400)=0) then
+dbms_output.put_line(n||' is a Leap Year');
+elsif (mod(n,100)=0) then
+dbms_output.put_line(n||' is not a Leap Year');
+elsif (mod(n,4)=0) then
+dbms_output.put_line(n||' is a Leap Year');
+else
+dbms_output.put_line(n||' is not a Leap Year');
+end if;
+end;
+
+
+declare
+num number(4);
+begin
+num :=:num;
+
+if(mod(num,400)=0) then
+dbms_output.put_line(num||' is a Leap Year');
+elsif (mod(num,100)=0) then
+dbms_output.put_line(num||' is not a Leap Year');
+elsif (mod(num,4)=0) then
+dbms_output.put_line(num||' is a Leap Year');
+else
+dbms_output.put_line(num||' is not a Leap Year');
+end if;
+end;
+
+
+i)
+create or replace function isLeapYear
+(
+n number
+)
+return varchar is
+begin
+if(mod(n,400)=0) then
+return 'Leap Year';
+elsif (mod(n,100)=0) then
+return 'Not Leap Year';
+elsif (mod(n,4)=0) then
+return 'Leap Year';
+else
+return 'Not Leap Year';
+end if;
+end;
+
+ii)
+select isLeapYear(2000) from dual;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

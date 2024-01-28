@@ -1,0 +1,762 @@
+
+*******************************************************
+******************************************************
+*PL/SQL
+
+
+>BEGIN
+insert into emp(empno,ename)
+values (100,'javed');
+end
+
+>BEGIN
+update emp set deptno=50
+where empno=100;
+end;
+
+>declare 
+a number(5):=5;
+BEGIN
+dbms_output.put_line(a);
+end;
+
+>declare 
+a number(5);
+BEGIN
+a:=:a;
+dbms_output.put_line('a='||a);
+end;
+
+>DECLARE         -- input num and char and display it
+NUM  NUMBER;
+CH CHAR;
+BEGIN
+NUM := :NUM;
+CH := :CH;
+DBMS_OUTPUT.PUT_LINE ('NUM = ' || NUM);
+DBMS_OUTPUT.PUT_LINE ('CH =  '|| CH);
+END;
+
+
+
+>
+declare 
+a number(5);
+BEGIN
+a:=:a;
+if (a>=50) then
+dbms_output.put_line('pass');
+else
+dbms_output.put_line('fail');
+END IF;
+end;
+
+
+>declare 
+a number(5);
+BEGIN
+a:=:a;
+if (a>=50) then
+begin
+dbms_output.put_line('pass');
+end;
+else
+begin
+dbms_output.put_line('fail');
+end;
+END IF;
+end; 
+
+
+
+
+>declare 
+dno dept.deptno%type;
+s dept.dname%type;
+BEGIN
+dbms_output.put_line('enter dno');
+dno:=:dno;
+dbms_output.put_line('enter dname');
+s:=:s;
+insert into dept values(dno,s,null);
+
+end;
+
+
+
+>declare         --loop
+a number(5):=1;
+BEGIN
+loop 
+dbms_output.put_line(a);
+a:=a+1;
+exit when a>5;
+end loop;
+end;
+
+
+>DECLARE    --while loop
+  n_counter NUMBER := 1;
+BEGIN
+  WHILE n_counter <= 5
+  LOOP
+    DBMS_OUTPUT.PUT_LINE( 'Counter : ' || n_counter );
+    n_counter := n_counter + 1;
+  END LOOP;
+END;
+
+
+>declare        --while loop
+a number:=1;
+BEGIN
+WHILE a <= 5 
+LOOP
+dbms_output.put_line(a);
+a:=a+1;
+END LOOP;
+end;
+
+
+>declare      -- for loop
+a number:=1;
+
+BEGIN
+dbms_output.put_line('program started');
+FOR a IN 1 .. 5
+LOOP
+dbms_output.put_line(a);
+END LOOP;
+dbms_output.put_line('Program completed.'); 
+
+end;
+
+//create procedure
+create procedure insert_dept2(
+dno dept.deptno%type,  --arguments
+dname dept.dname%type
+) is
+BEGIN
+insert into dept values(dno,dname,null);
+END;
+
+begin
+insert_dept2(66,'lib');
+end;
+
+drop procedure insert_dept2
+//
+
+//
+create or replace procedure addTwoNum  is
+a NUMBER := 3;   --  loacal var
+b NUMBER := 6;
+begin
+DBMS_OUTPUT.PUT_LINE (a + b);
+end;
+
+begin
+addTwoNum();
+end;
+
+drop procedure addTwoNum;
+
+//
+
+
+
+//function
+create  function compute_Marks(a number)
+return char  is
+begin
+if (a>=50) then
+return 'pass';
+else
+return 'fail';
+END IF;
+end; 
+
+
+select 
+compute_Marks(30)
+from dual
+
+*******************************************************
+******************************************************
+
+
+*views*
+
+>create or replace view emp2 (empno,sname,deptNo)
+as select empno,ename ,deptno from emp
+       where deptno=10
+
+insert into emp2
+values (99,'Ali',20);   
+
+insert into emp2
+values (99,'Ali',10)
+
+>create or replace view emp2 (empno,sname,deptNo)
+as select empno,ename ,deptno from emp
+       where deptno=10
+with check option
+
+
+delete from emp
+where ename='Ali'
+
+
+>CREATE VIEW	dept_sum_vu  (name, minsal, maxsal, avgsal)
+ AS (SELECT	d.dname, MIN(e.sal), MAX(e.sal),AVG(e.sal)			
+  FROM				emp e, dept d
+  WHERE				e.deptno = d.deptno
+  GROUP BY 	d.dname)
+
+select * from dept_sum_vu
+
+
+*sequence*
+
+>create sequence s
+start with 1
+
+>select s.nextval from dual
+>drop sequence s
+
+>create sequence s
+start with 1
+increment by 1
+
+
+insert into emp(empno,ename)
+values (s.nextval,'javaid')
+
+*index*
+
+create index emp_ename_index
+on emp(ename)
+
+select * from emp
+
+drop index emp_job_index
+
+
+*synonym*
+
+select * from user_tables
+
+create synonym ut for user_tables
+
+select * from ut
+
+drop synonym ut
+
+
+
+
+*Create table*
+
+
+
+
+>lab 8   *table creation and constraints*
+
+CREATE TABLE manager
+	AS 		SELECT * from emp
+    		WHERE job like 'MANAGER'
+
+
+CREATE TABLE dept10
+	AS 		SELECT * from emp
+    		WHERE deptno=10
+
+alter table emp
+  rename column ename to "Enmployee Name"
+
+ alter table emp
+  rename column job to "designation"
+
+
+alter table emp
+add primary key(empno)
+
+
+ALTER TABLE emp
+ADD CONSTRAINT empno_pk PRIMARY KEY (empno);
+
+ALTER TABLE emp
+DROP primary key
+
+
+ALTER TABLE emp
+RENAME TO "EMPLOYEE"
+
+
+alter table emp
+add (MgrName   VARCHAR2(10))
+
+
+insert into emp(MGRNAME)
+SELECT	m.ename 
+FROM	emp e, emp m
+WHERE	e.mgr=m.empno
+
+UPDATE emp
+SET   mgrname = m.ename
+FROM emp e JOIN emp m 
+ON (e.mgr=m.empno)
+
+
+update emp 
+set (MGRNAME)=(SELECT  m.ename 
+                   FROM emp e  join emp m 
+               ON (e.mgr=m.empno))
+where e.mgr=m.empno
+
+
+
+
+create table STUDENT
+(
+REQNO Number(4) primary key,
+SNAME VARCHAR2(10) NOT NULL,
+PROGRAM VARCHAR2(4) CHECK (PROGRAM IN('BS','BBA','BA')),
+NIC Number(13)
+)
+
+
+CREATE TABLE salesman
+	AS 		SELECT * from emp
+    		WHERE job like 'SALESMAN'
+
+UPDATE salesman
+SET sal=sal+367
+
+
+
+insert into emp( empno,ename,job,mgr,hiredate,sal,comm,deptno)
+values (7950,'Rashid','Vice President',7839,TO_DATE ('Sep 26 1999','Mon dd yyyy'),4379,1392,40)
+
+alter table emp
+modify (JOB VARCHAR2(20) )
+
+
+update emp
+set sal=4869
+where ename='Rashid'
+
+
+delete from emp
+where sal<2500
+
+
+
+create table class
+(
+Roll_Number char(10) primary key,
+Name VARCHAR2(10) NOT NULL,
+DEGREE VARCHAR2(4) CHECK (DEGREE IN('BSCS','BSSE','BSIT')),
+GPA Number(7,2) CHECK(GPA > 0 AND GPA <= 4.0)
+)
+
+insert into class 
+values ('bcsf18m005','Umer','BSIT',4.0)
+
+delete from class
+
+
+
+*Create table*
+>create table STUDENT
+(
+REQNO Number(4) primary key,
+SNNAME VARCHAR2(10) NOT NULL,
+PROGRAM VARCHAR2(4) CHECK (PROGRAM IN('BS','BBA','BA')),
+NIC Number(13)
+
+
+)
+
+insert into student 
+values (0001,'HUMZA','BA','3520146546243')
+
+
+>create table student1
+(
+rollno char(10)primary key,
+sname varchar2(20) not null,
+dp char(10) check (dp in ('BCS','BIT','BSE')), 
+adm_date date default sysdate,
+nic char(15) not null,
+marks number(3) check (marks>500),
+deptno number(2),
+constraint stu_nic_uk unique(nic)
+
+)
+
+
+
+
+*DML*
+INSERT INTO	dept (deptno, dname, loc)
+ VALUES		(50, 'DEVELOPMENT', 'DETROIT');
+
+UPDATE 	emp
+  SET    	deptno = 20
+  WHERE  	empno = 7782;
+
+>
+insert into emp
+select empno,ename,job,mgr,hiredate,sal,comm,40  from emp 
+where ename='SMITH';
+
+
+>select * from emp where ename like '%S%' and ename not like '%S%S%'
+
+
+DELETE FROM	department
+  2  WHERE 		dname = 'DEVELOPMENT'; 
+
+
+SELECT	*  FROM	emp   
+WHERE	comm >all (select comm from emp where deptno=10)
+
+
+>SELECT  ename, deptno, job   FROM   emp
+WHERE   job=(select job from emp where ename='CLARK') and sal < ( select avg(sal) from emp )
+
+>SELECT ename,sal,deptno,
+case        when sal < (select avg(sal) from emp) then sal+ (sal*15)/100
+            when sal >(select avg(sal) from emp) then sal+ (sal*5)/100
+            end "revised salary"
+       
+from emp
+
+
+*subquery*
+
+>
+SELECT ename
+FROM   emp
+WHERE  sal >  (SELECT sal FROM   emp   WHERE  empno=7566);
+             
+>
+SELECT  empno, ename, job    -- in operator
+ FROM    emp
+   WHERE   sal IN 	(SELECT	MIN(sal) FROM	emp GROUP BY deptno);
+  			
+ >
+SELECT  empno, ename, job        -- any operator
+   FROM    emp
+    WHERE   sal < ANY 
+  			(SELECT	sal
+   			FROM	emp
+  			WHERE	job = 'CLERK')
+    AND	    job <> 'CLERK';
+			
+
+>SELECT  a.ename, a.sal, a.deptno, b.salavg     -- using subquery in from clause slide 28
+   FROM    emp a, (SELECT   deptno, avg(sal) salavg
+                    FROM     emp
+                    GROUP BY deptno) b
+     WHERE   a.deptno = b.deptno
+    AND     a.sal > b.salavg;
+
+
+
+SELECT * FROM Emp Emp1  --for nth highest salary
+WHERE (N-1) = (
+SELECT COUNT(DISTINCT Emp2.Sal) 
+FROM Emp Emp2 
+WHERE Emp2.Sal > Emp1.Sal); 
+
+
+>SELECT * FROM Emp Emp1          --for nth highest salary
+WHERE 0 = (
+SELECT COUNT(DISTINCT Emp2.Sal) 
+FROM Emp Emp2 
+WHERE Emp2.Sal > Emp1.Sal); 
+
+>
+SELECT	deptno, MIN(sal)
+FROM	emp
+GROUP BY	deptno
+HAVING	MIN(sal) >
+  		(SELECT	MIN(sal)
+  		FROM	emp
+  		WHERE	deptno = 20);
+
+
+
+
+10:45 pm 11/11/2020
+
+*lab 7*
+7>
+SELECT	*  FROM	emp   
+WHERE	comm >all (select comm from emp where deptno=10)  
+
+
+6>
+
+SELECT  ename ,sal,concat(rpad(substr(sal*12,1,1),(length(sal*12)-3),'*'), substr(sal*12,-2,2) ) FROM emp
+where ename ='KING'
+
+
+3>
+SELECT  ename, deptno, job   FROM   emp
+WHERE   job=(select job from emp where ename='CLARK') and sal < ( select avg(sal) from emp )
+ 
+
+7>
+select * from emp
+where comm is not null and comm>all(select comm from emp where deptno=20 and comm is not NULL)
+
+6>
+
+SELECT  ename sal,concat(rpad(substr(sal*12,1,1),(length(sal*12)-2),'*'), substr(sal*12,-2,2) )   FROM emp
+where ename like 'KING'
+
+--concat(  substr(sal*12,1,1 ) ,lpad( substr(sal*12,-2,2),(length(sal*12)-3),'*')  )
+--concat(rpad(substr(sal*12,1,1),(length(sal*12)-2),'*'), substr(sal*12,-2,2) )
+
+SELECT  * FROM emp
+WHERE deptno = 
+(SELECT deptno FROM emp join dept using(deptno) where ename='SMITH' );
+
+
+
+UPDATE  emp
+ SET     (job, deptno,sal) = (SELECT job, deptno,sal
+    		                 FROM    emp
+                            WHERE   ename='allen')                        
+ WHERE   ename='king'
+
+
+update dept
+set loc=('New YORK')
+where deptno=20
+
+
+update emp 
+set ename=lower(ename)
+
+
+select (SELECT  count(*)  FROM   emp WHERE    sal > ( select avg(sal) from emp )) as "greater than avg sal",
+       (SELECT  count(*)  FROM   emp WHERE    sal < ( select avg(sal) from emp ) )   as  "less than avg sal" from emp
+
+    WHERE ROWNUM=1
+
+
+INSERT INTO	dept (deptno, dname, loc)
+ VALUES		(50, 'IT', 'KARACHI');
+delete from dept
+where deptno=50
+
+
+delete from emp
+where deptno=(select deptno from dept where dname ='OPERATIONS')
+
+
+
+bcsf18m007-MUHAMMAD AHSAN11:01 AM
+Inner querry se hmain un salaries ka count return kry gi jo emp2 me emp1 se greater hain
+bcsf18m007-MUHAMMAD AHSAN11:02 AM
+2nd highest k case me sirf 1 sal (highest sal) emp2 me hogi jo emp1 ki sal se bari hogi 
+bcsf18m045-MUHAMMAD USMAN11:02 AM
+Or emp1 mai hm greater select kr rhe hain wo where se kr rhe hain, right?
+bcsf18m007-MUHAMMAD AHSAN11:03 AM
+emp2 me greater select kr rhy hain where se
+bcsf18m045-MUHAMMAD USMAN11:03 AM
+Dorime
+bcsf18m007-MUHAMMAD AHSAN11:06 AM
+faheem clear he?
+
+joins sql-5)
+
+>SELECT	e.ename as "Emplyeee",m.ename as " manager"
+FROM	emp e, emp m
+WHERE	e.mgr=m.empno
+
+>SELECT	m.ename ||' is a manager of '||e.ename 
+FROM	emp e right outer join emp m
+on	e.mgr=m.empno
+
+>SELECT	e.ename as "Emplyeee",m.ename as " manager"     --  fing manager of scott
+FROM	emp e, emp m
+WHERE	e.mgr=m.empno and e.ename='SCOTT'
+
+{{{{{{
+>SELECT	e.ename, d.deptno, d.dname,d.loc     -- emp that work in newyork dept
+ FROM	emp e, dept d
+WHERE	e.deptno = d.deptno and d.loc='NEW YORK'
+ 
+(same as)
+
+SELECT	e.ename, d.deptno, d.dname,d.loc     
+FROM	emp e join dept d
+on	e.deptno = d.deptno and d.loc='NEW YORK'}}}}}}}
+
+>SELECT	e.ename, d.deptno, d.dname
+ FROM	emp e, dept d
+WHERE	e.deptno(+) = d.deptno
+intersect
+SELECT	e.ename, d.deptno, d.dname
+FROM	emp e, dept d
+WHERE	e.deptno = d.deptno(+)
+
+
+
+
+
+
+
+
+
+
+>SELECT  table_name, column_name, data_type, data_length FROM all_tab_columns where table_name = 'EMP'
+
+
+select *from emp
+where to_char(hiredate,'dd-mm-yy')>'11-nov-80'
+
+select ename || ' is a ' || job from emp
+
+select *from emp
+order by deptno desc,sal (desc/asc apply on the adjacent word)
+
+
+>
+select ename , job from emp
+where lower(job) = 'clerk'
+
+>select ename , substr(ename,3) as "substr" from emp
+
+>select ename , lpad(ename,10,'=') from emp
+
+
+>select ename , RpAd(ename,10,'=') from emp
+
+>select instr('syed Nouman ali ',' ',1,3) from dual
+<16>
+
+
+>
+select mgr ,round(mgr,-2) from emp
+where mgr is not null
+
+>select (months_between('10/8/2020','11/19/1998'))/12 from dual
+
+>select add_months('10/8/2020',6) from dual
+
+>select next_day('10/8/2020','sat') from dual
+
+>select next_day('10/8/2020','FRIDAY') from dual
+
+>select next_day('10/8/2020','fri') from dual
+>select next_day('10/1/2020','frid') from dual
+>select next_day('10/1/2020','tue            ') from dual
+
+>select ROUND(SYSDATE ,'YEAR') from dual
+>select ROUND(SYSDATE ,'month') from dual
+
+>SELECT ROUND (TO_DATE ('10/8/2020'),'YEAR') from dual
+
+>SELECT trunc(TO_DATE ('10/16/2020'),'year') from dual
+>SELECT trunc(to_date('10/16/2020'),'year') from dual
+
+
+
+>SELECT ename, hiredate from emp where to_char(hiredate,'mm-dd-yy') < to_date('10-10-82','mm-dd-yy')  
+>SELECT ename, hiredate from emp where to_date(to_char(hiredate,'mm-dd-yy')) < to_date('10-10-82','mm-dd-yy')   --do not work properly
+>SELECT ename, hiredate from emp where to_char(hiredate,'mm-dd-yyyy') < to_date('10-10-1982','mm-dd-yyyy')
+
+>SELECT ename,hiredate,to_char(hiredate,'day/-month--year'),sal from emp
+where hiredate <'1/1/1982'
+
+>SELECT ename,hiredate,TO_CHAR (hiredate, 'MONTH DD, YYYY'),sal from emp
+where hiredate <'1/1/1982'
+
+//  commands taken from
+// https://www.tutorialspoint.com/sql_certificate/conversion_functions.htm#:~:text=SQL%20Conversion%20functions%20are%20single,cross%20modification%20of%20data%20types.
+
+>SELECT ename,TO_CHAR (hiredate, 'MONTH DD, YYYY') HIREDATE, TO_CHAR (sal, '$99999.99') Salary from emp
+where hiredate > TO_DATE ('1/1/1982')
+
+
+>SELECT  ename ,mgr, TO_NUMBER('7600') 
+FROM emp
+where mgr>TO_NUMBER('7600')
+
+>SELECT TO_DATE('January 15, 1989, 11:00 A.M.',  'Month dd, YYYY, HH:MI A.M.',  'NLS_DATE_LANGUAGE = American')
+FROM DUAL;
+_____________________________________________________________
+_____________________________________________________________
+
+*Group functions*
+
+>SELECT    job, SUM(sal)  FROM      emp
+WHERE	  job NOT LIKE 'SALES%'
+GROUP BY  job
+HAVING    SUM(sal)>5000
+ORDER BY  SUM(sal);
+
+>select job,avg(sal) ,count(*)from emp
+group by job
+
+>select job,avg(sal) ,count(*)from emp                   (cal avg sal of each job which are in dep 10 or 20)
+where deptno in(10,20)
+group by  job
+
+
+*JOIN*
+
+>select * from  FROM  dept,emp
+
+>SELECT empno,ename,job,sal,emp.deptno, dname,loc    FROM  dept,emp
+where emp.deptno=dept.deptno
+order by deptno
+
+
+>SELECT empno,ename, job ,sal,e.deptno, dname,loc    FROM  dept d , emp e
+where e.deptno = d.deptno
+
+
+>SELECT empno,ename,job,sal,deptno, dname,loc    FROM  dept  join emp 
+using(deptno)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
